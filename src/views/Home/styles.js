@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FFF',
         alignItems: 'center', // fazz o alinhamento vertical do ecra
-        justifyContent: 'center' // fazz o alinhamento horizontal do ecra
+        justifyContent: 'flex-start' // fazz o alinhamento horizontal do ecra
     }
 });
 
