@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {View, Text, TouchableOpacity, ScrollView, ActivityIndicator} from 'react-native';
 
 import styles from './styles';
 
@@ -8,10 +8,29 @@ import Header from '../../compoments/Header';
 import Footer from '../../compoments/Footer';
 import TaskCard from '../../compoments/TaskCard';
 
+// conexao com API
+import api from '../../services/api';
+
 
 export default function Home(){
 
     const [filter, setFilter] = useState('today');
+    const [tasks, setTasks] = useState([]); // para armazenar uma coleçao de tarefas da BD
+    const [load, setLoad] = useState(false);
+
+    // carregar as tarefas da BD
+    async function loadTasks(){
+        setLoad(true);
+        await api.get('/task/filter/all/11-11-11-11-11-11')
+        .then(response => {
+            setTasks(response.data)
+            setLoad(false);
+        });
+    }
+
+    useEffect(() => {
+        loadTasks();
+    }, [])
     
 
     return(
@@ -46,8 +65,21 @@ export default function Home(){
                 <Text style={styles.titleText}>Tarefas</Text>
             </View>
 
-            <ScrollView style={styles.content} contentContainerStyle={{alignItems: 'center'}}>
-                <TaskCard  done={false}/>
+            
+
+            <ScrollView style={styles.content} contentContainerStyle={{alignItems: 'center'}}>         
+                {
+                    load ? 
+
+                    <ActivityIndicator color='#EE6B26' size={50} />
+
+                    :
+
+                    tasks.map( t => 
+                        (// map vai percorrer cada item que estiver dentro da coleçao de forma automatica                   
+                             <TaskCard  done={false} title={t.title} when={t.when} />
+                    ))
+                }
             </ScrollView>
 
         
