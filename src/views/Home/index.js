@@ -16,7 +16,8 @@ export default function Home(){
 
     const [filter, setFilter] = useState('today');
     const [tasks, setTasks] = useState([]); // para armazenar uma coleçao de tarefas da BD
-    const [load, setLoad] = useState(false);
+    const [load, setLoad] = useState(false); // para utilizar juntamente com ActivityIndicator -> é o loading icon
+    const [lateCount, SetLateCount] = useState();
 
     // carregar as tarefas da BD
     async function loadTasks(){
@@ -28,15 +29,29 @@ export default function Home(){
         });
     }
 
+    // verificar quantas tarefas estao em atraso
+    async function lateVerify(){
+        await api.get(`/task/filter/late/11-11-11-11-11-11`)
+        .then(response => {
+            SetLateCount(response.data.length) // retorna a quantidade de elementos/tarefas atrasados
+        });
+    }
+
+    // atualiza o filtro selecionado para 'late'
+    function Notification(){
+        setFilter('late');
+    }
+
     useEffect(() => {
         loadTasks();
+        lateVerify();
     }, [filter])
     
 
     return(
 
         <View style={styles.container}>
-            <Header showNotification={true} showBack={false} />
+            <Header showNotification={true} showBack={false} pressNotification={Notification} late={lateCount} />
 
             <View style={styles.filter}>
                 <TouchableOpacity onPress={ () => setFilter('all')}>
@@ -62,7 +77,7 @@ export default function Home(){
             </View>
 
             <View style={styles.title}>
-                <Text style={styles.titleText}>Tarefas</Text>
+                <Text style={styles.titleText}>TAREFAS {filter == 'late' && ' ATRASADAS'}</Text>
             </View>
 
             
