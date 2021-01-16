@@ -37,7 +37,7 @@ export default function Home(){
         });
     }
 
-    // atualiza o filtro selecionado para 'late'
+    // atualiza o filtro selecionado -> simbolo notificaçao para 'late'
     function Notification(){
         setFilter('late');
     }
