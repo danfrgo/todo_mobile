@@ -77,7 +77,7 @@ export default function Home(){
 
                     tasks.map( t => 
                         (// map vai percorrer cada item que estiver dentro da coleçao de forma automatica                   
-                             <TaskCard  done={false} title={t.title} when={t.when} />
+                             <TaskCard  done={false} title={t.title} when={t.when} type={t.type} />
                     ))
                 }
             </ScrollView>

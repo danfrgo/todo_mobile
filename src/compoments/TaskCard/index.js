@@ -4,13 +4,14 @@ import {format} from 'date-fns';
 
 import styles from './styles';
 
-import iconDefault from '../../assets/default.png';
+// Coleção de ICONS
+import typeIcons from '../../utils/typeIcons';
 
-export default function TaskCard({done, title, when}){
+export default function TaskCard({done, title, when, type}){
     return(
         <TouchableOpacity style={[styles.card, done && styles.done]}>
             <View style={styles.cardLeft}>
-                <Image source={iconDefault} style={styles.typeActive} />
+                <Image source={typeIcons[type]} style={styles.typeActive} />
                 <Text style={styles.cardTitle}>{title}</Text>
             </View>
 
