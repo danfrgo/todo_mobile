@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 
 import styles from './styles';
 
 // COMPONENTES
 import Header from '../../compoments/Header';
 import Footer from '../../compoments/Footer';
+import TaskCard from '../../compoments/TaskCard';
+
 
 export default function Home(){
 
@@ -40,6 +42,24 @@ export default function Home(){
                 </TouchableOpacity>
             </View>
 
+            <View style={styles.title}>
+                <Text style={styles.titleText}>Tarefas</Text>
+            </View>
+
+            <ScrollView style={styles.content} contentContainerStyle={{alignItems: 'center'}}>
+                <TaskCard  done={false}/>
+                <TaskCard />
+                <TaskCard />
+                <TaskCard />
+                <TaskCard />
+                <TaskCard />
+                <TaskCard />
+                <TaskCard />
+                <TaskCard />
+                <TaskCard />
+            </ScrollView>
+
+        
 
 
             <Footer icon={'add'} />
