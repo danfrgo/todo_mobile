@@ -12,7 +12,7 @@ import TaskCard from '../../compoments/TaskCard';
 import api from '../../services/api';
 
 
-export default function Home(){
+export default function Home({navigation}){ // propriedade navigation atraves do createSwitchNavigator do App.js
 
     const [filter, setFilter] = useState('today');
     const [tasks, setTasks] = useState([]); // para armazenar uma coleçao de tarefas da BD
@@ -20,7 +20,7 @@ export default function Home(){
     const [lateCount, SetLateCount] = useState();
 
     // carregar as tarefas da BD
-    async function loadTasks(){
+    async function loadTasks(){ 
         setLoad(true);
         await api.get(`/task/filter/${filter}/11-11-11-11-11-11`)
         .then(response => {
@@ -40,6 +40,10 @@ export default function Home(){
     // atualiza o filtro selecionado -> simbolo notificaçao para 'late'
     function Notification(){
         setFilter('late');
+    }
+
+    function New(){
+        navigation.navigate('Task'); // abrir o ecra das Tasks
     }
 
     useEffect(() => {
@@ -100,7 +104,7 @@ export default function Home(){
         
 
 
-            <Footer icon={'add'} />
+            <Footer icon={'add'} onPress={New} />
         </View>
         
     )
